@@ -2,5 +2,3 @@ Average Mass of Living Birds: 267.1454491779453 g
 Average Mass of Extinct Birds: 4893.768000000001 g
 Average Mass of Extinct Birds: 4893.768000000001 g
 Average Mass of Extinct Birds: 4893.768000000001 g
-Average Mass of Extinct Birds: 4893.768000000001 g
-Average Mass of Living Birds: 267.1454491779453 g

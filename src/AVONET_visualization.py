@@ -3,7 +3,7 @@ import pandas as pd
 
 df = pd.read_csv("data/AVONET.csv")
 df_AVONET_IUCN = pd.read_csv("data/AVONET_IUCN.csv")
-df_AVONET_IUCN["IUCN_Red_List_Category"] = df_AVONET_IUCN["IUCN_Red_List_Category"].str.strip()
+df_AVONET_IUCN["RL Category"] = df_AVONET_IUCN["RL Category"].str.strip()
 
 
 #Order counts and proportions
@@ -18,7 +18,7 @@ plt.xticks(rotation=90)
 plt.tight_layout()
 plt.show()
 
-IUCN_proportions = df_AVONET_IUCN["IUCN_Red_List_Category"].value_counts(normalize=True)
+IUCN_proportions = df_AVONET_IUCN["RL Category"].value_counts(normalize=True)
 
 plt.bar(IUCN_proportions.index, IUCN_proportions.values)
 plt.xlabel("IUCN Red List Category")

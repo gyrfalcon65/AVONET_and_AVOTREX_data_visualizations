@@ -12,8 +12,8 @@ missing_species = df_AVONET_IUCN[df_AVONET_IUCN["RL Category"].isna()]["Species1
 missing = df_AVONET_IUCN["RL Category"].isna().sum()
 total = len(df_AVONET_IUCN)
 with open("./output/missing_species.txt", "w") as file:
-    file.write(f"{missing} out of {total} species missing IUCN rating")
-    file.write("Species missing IUCN rating: " + "\n" + missing_species.head(1130).to_string() + "\n")
+    file.write(f"{missing} out of {total} species missing IUCN rating" + "\n")
+    file.write(missing_species.head(1130).to_string() + "\n")
 
 
 

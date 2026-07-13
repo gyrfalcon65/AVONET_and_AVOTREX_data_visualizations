@@ -1,4 +1,4 @@
-340 out of 11009 species missing IUCN ratingSpecies missing IUCN rating: 
+340 out of 11009 species missing IUCN rating
 619          Caprimulgus centralasicus
 734                  Amazilia amabilis
 735                  Amazilia amazilia

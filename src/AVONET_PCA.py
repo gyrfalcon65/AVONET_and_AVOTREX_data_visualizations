@@ -4,7 +4,6 @@ import numpy as np
 import seaborn as sns
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
 
 df_AVONET_IUCN = pd.read_csv("./data/AVONET_IUCN.csv") #Reads in the AVONET_IUCN spreadsheet
 df = df_AVONET_IUCN.drop(columns=["Total.individuals", "Complete.measures", "Sequence", "Female", "Male", "Unknown", "Max.Latitude", "Min.Latitude", "Centroid.Longitude", "Centroid.Latitude", "Habitat.Density", "Migration"]).select_dtypes(include=[np.number]).dropna() #Selects the columns with only numbers and removes the rows with missing values
@@ -55,3 +54,8 @@ plt.xlim(-3, 27)
 plt.title("AVONET PCA without LC Dots")
 plt.savefig("./output/AVONET_PCA_without_LC.png", dpi=300, bbox_inches="tight")
 plt.show()
+
+#Get the PC values for each species in AVONET
+df_PCA = pd.DataFrame(x_pca, columns=["PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11"], index=df.index)
+merged_df = pd.merge(df_AVONET_IUCN, df_PCA, left_index=True, right_index=True)
+merged_df.to_csv("./data/AVONET_IUCN_PCA_values.csv")

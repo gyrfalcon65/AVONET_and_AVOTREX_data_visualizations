@@ -11,24 +11,24 @@ df = df_AVONET_IUCN.drop(columns=["Total.individuals", "Complete.measures", "Seq
 IUCN_categories = df_AVONET_IUCN.loc[df.index, "RL Category"] #Gets the IUCN categories from the AVONET_IUCN spreadsheet
 scaler = StandardScaler() #Standardizes the data
 scaler.fit(df) #Fits the scaler to the data
-scaled_data = scaler.transform(df)
+scaled_data = scaler.transform(df) #Transforms the data to the standardized space
 
-pca = PCA(n_components=11)
-pca.fit(scaled_data)
-x_pca = pca.transform(scaled_data)
+pca = PCA(n_components=11) #Creates a PCA object with 11 principal components
+pca.fit(scaled_data) #Fits the PCA model to the scaled data
+x_pca = pca.transform(scaled_data) #Transforms the data to the PCA space
 
-pc_values = np.arange(pca.n_components_)+1
-plt.plot(pc_values, pca.explained_variance_ratio_, 'o-', linewidth=2, color='blue')
+pc_values = np.arange(pca.n_components_)+1 #Creates an array of the principal components
+plt.plot(pc_values, pca.explained_variance_ratio_, 'o-', linewidth=2, color='blue') #Plots the scree plot
 plt.title('Scree Plot')
 plt.xlabel('Principal Component')
 plt.ylabel('Proportion of Variance Explained')
-plt.xticks(np.arange(1, 12, 1))
-plt.savefig("./output/AVONET_PCA_Scree_Plot.png", dpi=300, bbox_inches="tight")
+plt.xticks(np.arange(1, 12, 1)) #Sets the x-axis ticks so that it starts at 1, ends at 11, and increments by 1
+plt.savefig("./output/AVONET_PCA_Scree_Plot.png", dpi=300, bbox_inches="tight") #Saves the scree plot to a file with a resolution of 300 dpi and a tight bounding box
 plt.show()
 
 #Plot only the first two principal components because they explain the most variance
-plt.figure(figsize=(8, 6))
-sns.scatterplot(x=x_pca[:, 0], y=x_pca[:, 1], hue=IUCN_categories, hue_order=["LC","NT", "VU", "EN", "CR", "EW", "EX"], palette="viridis")
+plt.figure(figsize=(8, 6)) #Creates a figure with a width of 8 inches and a height of 6 inches
+sns.scatterplot(x=x_pca[:, 0], y=x_pca[:, 1], hue=IUCN_categories, hue_order=["LC","NT", "VU", "EN", "CR", "EW", "EX"], palette="viridis") #Plots the PCA scatter plot
 plt.xlabel("Principal Component 1")
 plt.ylabel("Principal Component 2")
 plt.ylim(-8, 11)
@@ -37,17 +37,17 @@ plt.title("AVONET PCA")
 plt.savefig("./output/AVONET_PCA.png", dpi=300, bbox_inches="tight")
 plt.show()
 
-df_comp = pd.DataFrame(pca.components_,columns=df.columns,index=["PC1","PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11"])
+df_comp = pd.DataFrame(pca.components_,columns=df.columns,index=["PC1","PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11"]) #Creates a dataframe of all 11 PCA components
 plt.figure(figsize=(16, 10))
-sns.heatmap(df_comp, annot=True, cmap="plasma")
+sns.heatmap(df_comp, annot=True, cmap="plasma") #Plots the PCA components heatmap
 plt.title("AVONET PCA Components Heatmap")
 plt.savefig("./output/AVONET_PCA_Components.png", dpi=300, bbox_inches="tight")
 plt.show()
 
 #Plot the PCA again but without the LC category
 plt.figure(figsize=(8, 6))
-not_lc = IUCN_categories != "LC"
-sns.scatterplot(x=x_pca[not_lc, 0], y=x_pca[not_lc, 1], hue=IUCN_categories[not_lc], hue_order=["NT", "VU", "EN", "CR", "EW", "EX"], palette="viridis")
+not_lc = IUCN_categories != "LC" #Creates a boolean array of the rows that are not LC
+sns.scatterplot(x=x_pca[not_lc, 0], y=x_pca[not_lc, 1], hue=IUCN_categories[not_lc], hue_order=["NT", "VU", "EN", "CR", "EW", "EX"], palette="viridis") #Plots the PCA scatter plot without the LC category
 plt.xlabel("Principal Component 1")
 plt.ylabel("Principal Component 2")
 plt.ylim(-8, 11)

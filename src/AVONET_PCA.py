@@ -24,7 +24,7 @@ plt.xlabel('Principal Component')
 plt.ylabel('Proportion of Variance Explained')
 plt.xticks(np.arange(1, 12, 1)) #Sets the x-axis ticks so that it starts at 1, ends at 11, and increments by 1
 plt.savefig("./output/AVONET_PCA_Scree_Plot.png", dpi=300, bbox_inches="tight") #Saves the scree plot to a file with a resolution of 300 dpi and a tight bounding box
-plt.show()
+# plt.show()
 
 #Plot only the first two principal components because they explain the most variance
 plt.figure(figsize=(8, 6)) #Creates a figure with a width of 8 inches and a height of 6 inches
@@ -35,14 +35,14 @@ plt.ylim(-8.5, 11)
 plt.xlim(-3, 27)
 plt.title("AVONET PCA")
 plt.savefig("./output/AVONET_PCA.png", dpi=300, bbox_inches="tight")
-plt.show()
+# plt.show()
 
 df_comp = pd.DataFrame(pca.components_,columns=df.columns,index=["PC1","PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11"]) #Creates a dataframe of all 11 PCA components
 plt.figure(figsize=(16, 10))
 sns.heatmap(df_comp, annot=True, cmap="plasma") #Plots the PCA components heatmap
 plt.title("AVONET PCA Components Heatmap")
 plt.savefig("./output/AVONET_PCA_Components_Heatmap.png", dpi=300, bbox_inches="tight")
-plt.show()
+# plt.show()
 
 #Plot the PCA again but without the LC category
 plt.figure(figsize=(8, 6))
@@ -54,7 +54,7 @@ plt.ylim(-8, 11)
 plt.xlim(-3, 27)
 plt.title("AVONET PCA without LC Dots")
 plt.savefig("./output/AVONET_PCA_without_LC.png", dpi=300, bbox_inches="tight")
-plt.show()
+# plt.show()
 
 #Get the PC values for each species in AVONET
 df_PCA = pd.DataFrame(x_pca, columns=["PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11"], index=df.index)
@@ -67,4 +67,14 @@ fig.update_traces(marker=dict(size=2))#Make the dots smaller
 fig.update_layout(title="AVONET PCA 3D Plot")
 fig.write_image("./output/AVONET_PCA_3D_Plot.png", width=2000, height=2000)
 fig.write_html("./output/AVONET_PCA_3D_Plot.html")
-fig.show()
+#fig.show()
+
+plt.figure(figsize=(10, 10), facecolor="white")
+plt.hexbin(merged_df["PC1"], merged_df["PC2"], gridsize=400, cmap = "viridis")
+plt.xlim(-2.3, 4)
+plt.ylim(-3, 3)
+plt.title("AVONET PCA Hexbin Plot")
+plt.xlabel("Principal Component 1")
+plt.ylabel("Principal Component 2")
+plt.savefig("./output/AVONET_PCA_Hexbin_Plot.png", dpi=300, bbox_inches="tight")
+plt.show()

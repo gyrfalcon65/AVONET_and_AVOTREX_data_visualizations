@@ -67,7 +67,7 @@ fig.update_traces(marker=dict(size=2))#Make the dots smaller
 fig.update_layout(title="AVONET PCA 3D Plot")
 fig.write_image("./output/AVONET_PCA_3D_Plot.png", width=2000, height=2000)
 fig.write_html("./output/AVONET_PCA_3D_Plot.html")
-#fig.show()
+fig.show()
 
 plt.figure(figsize=(10, 10), facecolor="white")
 plt.hexbin(merged_df["PC1"], merged_df["PC2"], gridsize=400, cmap = "viridis")

@@ -9,6 +9,7 @@ from sklearn.preprocessing import StandardScaler
 df_AVONET_IUCN = pd.read_csv("./data/AVONET_IUCN.csv") #Reads in the AVONET_IUCN spreadsheet
 df = df_AVONET_IUCN.drop(columns=["Total.individuals", "Complete.measures", "Sequence", "Female", "Male", "Unknown", "Max.Latitude", "Min.Latitude", "Centroid.Longitude", "Centroid.Latitude", "Habitat.Density", "Migration"]).select_dtypes(include=[np.number]).dropna() #Selects the columns with only numbers and removes the rows with missing values
 IUCN_categories = df_AVONET_IUCN.loc[df.index, "RL Category"] #Gets the IUCN categories from the AVONET_IUCN spreadsheet
+trophic_niches = df_AVONET_IUCN.loc[df.index, "Trophic.Niche"] #Gets the trophic niches from the AVONET_IUCN spreadsheet
 scaler = StandardScaler() #Standardizes the data
 scaler.fit(df) #Fits the scaler to the data
 scaled_data = scaler.transform(df) #Transforms the data to the standardized space
@@ -34,8 +35,18 @@ plt.ylabel("Principal Component 2")
 plt.ylim(-8.5, 11)
 plt.xlim(-3, 27)
 plt.title("AVONET PCA")
-plt.savefig("./output/AVONET_PCA.png", dpi=300, bbox_inches="tight")
+plt.savefig("./output/AVONET_PCA_IUCN.png", dpi=300, bbox_inches="tight")
 # plt.show()
+
+plt.figure(figsize=(8, 6)) #Creates a figure with a width of 8 inches and a height of 6 inches
+sns.scatterplot(x=x_pca[:, 0], y=x_pca[:, 1], hue=trophic_niches, palette="viridis") #Plots the PCA scatter plot
+plt.xlabel("Principal Component 1")
+plt.ylabel("Principal Component 2")
+plt.ylim(-8.5, 11)
+plt.xlim(-3, 27)
+plt.title("AVONET PCA")
+plt.savefig("./output/AVONET_PCA_trophic_niches.png", dpi=300, bbox_inches="tight")
+plt.show()
 
 df_comp = pd.DataFrame(pca.components_,columns=df.columns,index=["PC1","PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8", "PC9", "PC10", "PC11"]) #Creates a dataframe of all 11 PCA components
 plt.figure(figsize=(16, 10))
@@ -65,8 +76,8 @@ merged_df.to_csv("./data/AVONET_IUCN_PCA_values.csv")
 fig = px.scatter_3d(merged_df, x="PC1", y="PC2", z="PC3", color="RL Category", color_discrete_sequence=px.colors.qualitative.Prism, hover_name="Species1")
 fig.update_traces(marker=dict(size=2))#Make the dots smaller
 fig.update_layout(title="AVONET PCA 3D Plot")
-fig.write_image("./output/AVONET_PCA_3D_Plot.png", width=2000, height=2000)
-fig.write_html("./output/AVONET_PCA_3D_Plot.html")
+fig.write_image("./output/AVONET_PCA_IUCN_3D_Plot.png", width=2000, height=2000)
+fig.write_html("./output/AVONET_PCA_IUCN_3D_Plot.html")
 fig.show()
 
 plt.figure(figsize=(10, 10), facecolor="white")

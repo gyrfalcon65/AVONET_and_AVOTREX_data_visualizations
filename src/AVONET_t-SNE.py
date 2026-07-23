@@ -56,3 +56,10 @@ fig1.update_yaxes(title="t-SNE Feature 2")
 fig1.write_html("./output/AVONET_t-SNE_IUCN.html")
 fig1.show()
 
+fig2 = px.scatter(x=tsne_features[:,0], y=tsne_features[:,1], color=trophic_niches, color_discrete_sequence=px.colors.qualitative.Prism, hover_name=species)
+fig2.update_layout(title="t-SNE of AVONET IUCN Data")
+fig2.update_xaxes(title="t-SNE Feature 1")
+fig2.update_yaxes(title="t-SNE Feature 2")
+fig2.write_html("./output/AVONET_t-SNE_trophic_niches.html")
+fig2.show()
+
